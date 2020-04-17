@@ -1,5 +1,3 @@
-FINALPACKAGE = 1
-
 TARGET = iphone:clang::13.0
 ARCHS = arm64 arm64e
 

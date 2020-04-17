@@ -1,5 +1,15 @@
 // WallpaperLoader Headers
 
+enum WKWallpaperType {
+	Still,
+	Live
+};
+
+enum WKWallpaperStyle {
+	Default,
+	Dark
+};
+
 @interface WKWallpaperBundleCollection : NSObject
 @property (nonatomic, assign) unsigned long long wallpaperType;
 - (NSString *)displayName;
@@ -17,10 +27,13 @@
 - (void)test;
 @end
 
-@interface WKStillWallpaper : NSObject
+@interface WKAbstractWallpaper : NSObject
+@end
+
+@interface WKStillWallpaper : WKAbstractWallpaper
 - (id)initWithIdentifier:(unsigned long long)arg1 name:(id)arg2 thumbnailImageURL:(id)arg3 fullsizeImageURL:(id)arg4;
 @end
 
-@interface WKLiveWallpaper : NSObject
+@interface WKLiveWallpaper : WKAbstractWallpaper
 - (id)initWithIdentifier:(unsigned long long)arg1 name:(id)arg2 thumbnailImageURL:(id)arg3 fullsizeImageURL:(id)arg4 videoAssetURL:(id)arg5 stillTimeInVideo:(double)arg6;
 @end
