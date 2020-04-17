@@ -70,7 +70,7 @@ static id wallpaperForTypeStyleAndIndex(enum WKWallpaperType type, enum WKWallpa
 				UIImage *currentImage = [UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/%@", path, image]];
 				path = [NSString stringWithFormat:@"/tmp/WallpaperLoader/%@", name];
 
-				CGSize newSize = CGSizeMake(size, size);
+				CGSize newSize = CGSizeMake(currentImage.size.width * (size / currentImage.size.height), size);
 
 				UIGraphicsBeginImageContext(newSize);
 				[currentImage drawInRect:CGRectMake(0, 0, newSize.width, newSize.height)];
