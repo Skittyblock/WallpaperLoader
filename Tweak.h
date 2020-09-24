@@ -10,13 +10,6 @@ enum WKWallpaperStyle {
 	Dark
 };
 
-@interface WKWallpaperBundleCollection : NSObject
-@property (nonatomic, assign) unsigned long long wallpaperType;
-- (NSString *)displayName;
-- (long long)numberOfItems;
-- (id)wallpaperBundleAtIndex:(unsigned long long)index;
-@end
-
 @interface WKWallpaperBundle : NSObject
 @property (nonatomic, retain) NSNumber *wallpaperType;
 @property (nonatomic, retain) NSNumber *loadTag;
@@ -27,11 +20,21 @@ enum WKWallpaperStyle {
 - (void)test;
 @end
 
+@interface WKWallpaperBundleCollection : NSObject
+@property (nonatomic, assign) unsigned long long wallpaperType;
+- (NSString *)displayName;
+- (long long)numberOfItems;
+- (void)setPreviewBundle:(WKWallpaperBundle *)bundle;
+- (id)wallpaperBundleAtIndex:(unsigned long long)index;
+- (id)initWithWallpaperType:(unsigned long long)type previewBundle:(id)bundle;
+@end
+
 @interface WKAbstractWallpaper : NSObject
 @end
 
 @interface WKStillWallpaper : WKAbstractWallpaper
 - (id)initWithIdentifier:(unsigned long long)arg1 name:(id)arg2 thumbnailImageURL:(id)arg3 fullsizeImageURL:(id)arg4;
+- (id)initWithIdentifier:(unsigned long long)arg1 name:(id)arg2 thumbnailImageURL:(id)arg3 fullsizeImageURL:(id)arg4 renderedImageURL:(id)arg5;
 @end
 
 @interface WKLiveWallpaper : WKAbstractWallpaper

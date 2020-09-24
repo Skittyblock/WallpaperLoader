@@ -85,14 +85,20 @@ static id wallpaperForTypeStyleAndIndex(enum WKWallpaperType type, enum WKWallpa
 		}
 	}
 
-	id wp;
+	NSURL *thumbnailURL = [NSURL fileURLWithPath:[NSString stringWithFormat:@"%@/%@", thumbPath, data[@"thumbnailImage"]]];
+	NSURL *fullsizeURL = [NSURL fileURLWithPath:[NSString stringWithFormat:@"%@/%@", path, image]];
 	if (type == Still) {
-		wp = [[NSClassFromString(@"WKStillWallpaper") alloc] initWithIdentifier:1234 name:name thumbnailImageURL:[NSURL fileURLWithPath:[NSString stringWithFormat:@"%@/%@", thumbPath, data[@"thumbnailImage"]]] fullsizeImageURL:[NSURL fileURLWithPath:[NSString stringWithFormat:@"%@/%@", path, image]]];
+		if ([NSClassFromString(@"WKStillWallpaper") respondsToSelector:@selector(initWithIdentifier:name:thumbnailImageURL:fullsizeImageURL:)]) {
+			return [[NSClassFromString(@"WKStillWallpaper") alloc] initWithIdentifier:1234 name:name thumbnailImageURL:thumbnailURL fullsizeImageURL:fullsizeURL];
+		}
+		return [[NSClassFromString(@"WKStillWallpaper") alloc] initWithIdentifier:1234 name:name thumbnailImageURL:thumbnailURL fullsizeImageURL:fullsizeURL renderedImageURL:nil];
 	} else if (type == Live) {
 		// Live videos currently are not resized
-		wp = [[NSClassFromString(@"WKLiveWallpaper") alloc] initWithIdentifier:1234 name:name thumbnailImageURL:[NSURL fileURLWithPath:[NSString stringWithFormat:@"%@/%@", thumbPath, data[@"thumbnailImage"]]] fullsizeImageURL:[NSURL fileURLWithPath:[NSString stringWithFormat:@"%@/%@", path, image]] videoAssetURL:[NSURL fileURLWithPath:[NSString stringWithFormat:@"%@/%@", thumbPath, (style == Dark) ? data[@"darkVideo"] : data[@"defaultVideo"]]] stillTimeInVideo:0];
+		NSURL *videoURL = [NSURL fileURLWithPath:[NSString stringWithFormat:@"%@/%@", thumbPath, (style == Dark) ? data[@"darkVideo"] : data[@"defaultVideo"]]];
+		return [[NSClassFromString(@"WKLiveWallpaper") alloc] initWithIdentifier:1234 name:name thumbnailImageURL:thumbnailURL fullsizeImageURL:fullsizeURL videoAssetURL:videoURL stillTimeInVideo:0];
 	}
-	return wp;
+
+	return nil;
 }
 
 // Load custom bundles
