@@ -2,6 +2,8 @@
 // By Skitty
 #include "Tweak.h"
 
+static BOOL addLiveWallpapers = NO;
+
 static NSMutableArray *stillList;
 static NSMutableArray *liveList;
 
@@ -263,6 +265,34 @@ static id wallpaperForTypeStyleAndIndex(enum WKWallpaperType type, enum WKWallpa
 - (id)valueBasedWallpaperForLocation:(id)location andAppearance:(id)appearance {
 	if ([self.loadTag intValue] > 0)
 		return [self fileBasedWallpaperForLocation:location andAppearance:appearance];
+	return %orig;
+}
+
+%end
+
+// Add live wallpaper section to unsupported devices
+%hook WKWallpaperBundleImporter
+
+- (NSInteger)numberOfWallpaperBundleCollections {
+	if (%orig != 3 && [liveList count] > 0) {
+		addLiveWallpapers = YES;
+	}
+	return 3;
+}
+
+- (NSInteger)wallpaperTypeAtIndex:(NSInteger)index {
+	if (index == 2 && addLiveWallpapers) {
+		return 1; // live
+	}
+	return %orig;
+}
+
+- (WKWallpaperBundleCollection *)wallpaperBundleCollectionForWallpaperType:(NSUInteger)type {
+	if (type == 1 && addLiveWallpapers) {
+		WKWallpaperBundleCollection *collection = [[%c(WKWallpaperBundleCollection) alloc] initWithWallpaperType:1 previewBundle:nil];
+		[collection setPreviewBundle:[collection wallpaperBundleAtIndex:0]];
+		return collection;
+	}
 	return %orig;
 }
 

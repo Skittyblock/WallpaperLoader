@@ -1,7 +1,7 @@
 Package: wallpaperloader
 Name: WallpaperLoader
 Depends: mobilesubstrate, firmware (>= 13.0)
-Version: 1.0.1
+Version: 1.1
 Architecture: iphoneos-arm
 Description: Add more default wallpapers!
 Depiction: https://skitty.xyz/repo/depictions/?p=wallpaperloader
