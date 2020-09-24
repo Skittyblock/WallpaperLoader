@@ -11,7 +11,9 @@ static CGSize logicalSizeForScreenSize(CGSize screenSize) {
 	NSInteger logicalHeight = 0;
 	NSInteger logicalWidth = 0;
 	NSInteger screenHeight = screenSize.height / 2;
-	if (screenHeight <= 667) {
+	if (screenHeight <= 568) {
+		logicalHeight = 568; logicalWidth = 320; // 1392x1392 SE
+	} else if (screenHeight <= 667) {
 		logicalHeight = 667; logicalWidth = 375; // 1634x1634 8
 	} else if (screenHeight <= 896) {
 		logicalHeight = 896; logicalWidth = 414; // 2290x2290 XR / 11
@@ -29,7 +31,9 @@ static CGSize logicalSizeForScreenSize(CGSize screenSize) {
 // Wallpaper image size for the device screen size
 static CGFloat wallpaperSizeForScreenSize(CGSize screenSize) {
 	NSInteger screenHeight = screenSize.height / 2;
-	if (screenHeight <= 667) {
+	if (screenHeight <= 568) {
+		return 1392; // SE
+	} else if (screenHeight <= 667) {
 		return 1634; // 8
 	} else if (screenHeight <= 896) {
 		return 2290; // XR / 11
