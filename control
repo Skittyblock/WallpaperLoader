@@ -4,8 +4,8 @@ Depends: mobilesubstrate, firmware (>= 13.0)
 Version: 1.1
 Architecture: iphoneos-arm
 Description: Add more default wallpapers!
-Depiction: https://skitty.xyz/repo/depictions/?p=wallpaperloader
-SileoDepiction: https://skitty.xyz/repo/depictions/?s=wallpaperloader
+Depiction: https://skitty.xyz/repo/depictions/wallpaperloader
+SileoDepiction: https://skitty.xyz/repo/depictions/wallpaperloader/sileo.json
 Maintainer: Skitty
 Author: Skitty
 Section: Tweaks
