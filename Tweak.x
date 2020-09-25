@@ -276,8 +276,9 @@ static id wallpaperForTypeStyleAndIndex(enum WKWallpaperType type, enum WKWallpa
 - (NSInteger)numberOfWallpaperBundleCollections {
 	if (%orig != 3 && [liveList count] > 0) {
 		addLiveWallpapers = YES;
+		return 3;
 	}
-	return 3;
+	return %orig;
 }
 
 - (NSInteger)wallpaperTypeAtIndex:(NSInteger)index {
